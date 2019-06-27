@@ -1,0 +1,69 @@
+.login {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/2017/08/fandango-essential-movies.png?itok=zse69L2H');
+    background-size: contain;
+    font-family: $font;
+}
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(29, 29, 28, 0.65); 
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 50vw;
+    height: 70vh;
+    background-color: $main-background;
+
+    button {
+        width: 40vw;
+        height: 10vh;
+        background: #DC1928;
+        border: none;
+        color: white;
+        font-size: 1.5vw;
+        margin-top: 2.5vh;
+    }
+
+    .input {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        input {
+            width: 40vw;
+            height: 10vh;
+        }
+    }
+
+    h1 {
+        font-size: 3vw;
+        line-height: 10vh;
+    }
+
+    h2 {
+        color: white;
+        font-size: 2vw;
+        line-height: 10vh;
+    }
+
+    h3 {
+        color: white;
+        margin-left: 1vw;
+        font-size: 2vw;
+        line-height: 10vh;
+    }
+
+    .signUp {
+        display: flex;
+  }
+}

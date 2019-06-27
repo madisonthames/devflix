@@ -1,0 +1,48 @@
+.my-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 15vh;
+    margin-left: 50px;
+    font-family: $font;
+    z-index: 1;
+
+    h1 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    img {
+        width: 250px;
+        height: 140px;
+        margin-right: 5px;
+    }
+
+    p {
+        width: 240px;
+        height: 27px;
+        font-size: 21px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transform: translateY(-28px);
+        margin-left: 5px;
+        color: black;
+        font-weight: bolder;
+        -webkit-text-stroke: white .7px;
+    }
+}
+
+.my-list-row {
+    position: static;
+    margin: 2vh 0;
+
+    overflow-y: auto;
+    white-space: nowrap;
+    display: flex;
+
+        i {
+            color: white;
+            transform: translateY(-165px);
+            -webkit-text-stroke: black .7px;
+        }
+}

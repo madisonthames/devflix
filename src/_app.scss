@@ -1,0 +1,17 @@
+@import './variables.scss';
+@import './components/Header/header';
+@import './components/Header/header2';
+@import './components/Featured/featured';
+@import './components/BrowseLists/browselists';
+@import './components/Home/home';
+@import './components//Register/register';
+@import './components/Payment/payment';
+@import './components/Featured/featured2';
+@import './components/Video/video';
+@import './components/Login/login';
+@import './components/Genre/genre';
+@import './components/MyList/mylist';
+
+h1 {
+    color: white;
+}

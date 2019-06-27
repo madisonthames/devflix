@@ -1,0 +1,96 @@
+body {
+    background-color: $main-background;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+    }
+
+.fullBrowse {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 80vh;
+    margin-left: 50px;
+    font-family: $font;
+    z-index: 1;
+
+    h1 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    img {
+        width: 250px;
+        height: 140px;
+        margin-right: 5px;
+    }
+
+    p {
+        width: 240px;
+        height: 27px;
+        font-size: 21px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transform: translateY(-28px);
+        margin-left: 5px;
+        color: black;
+        font-weight: bolder;
+        -webkit-text-stroke: white .7px;
+    }
+}
+
+.listRow {
+    position: static;
+    margin: 2vh 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: nowrap;
+    display: flex;
+
+        i {
+            color: white;
+            transform: translateY(-165px);
+            -webkit-text-stroke: black .7px;
+        }
+}
+
+.listRow > a {
+    display: inline-block;
+}
+
+.movie {
+    // z-index: 3;
+
+    // &:hover {
+    //     transition: transform .4s ease;
+    //     transform: scale(1.7);
+    // }
+
+    // &--image {
+    //     display: block;
+    // }
+
+    // &--text {
+    //     display: none;
+    // }
+
+    // .icon-group {
+    //     display: block;
+    // }
+}
+
+
+.popular2ListRow {
+    display: flex;
+    margin: 2vh 0;
+    overflow: auto;
+    white-space: nowrap;
+    height: 400px;
+
+    img {
+        width: 250px;
+        height: 375px;
+        margin-right: 5px;
+    }
+}

@@ -2,10 +2,26 @@
   "name": "netflix",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:6000",
   "dependencies": {
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "font-awesome": "^4.7.0",
+    "massive": "^5.11.0",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "react-youtube": "^7.9.0",
+    "redux": "^4.0.1",
+    "redux-promise-middleware": "^6.1.1",
+    "sass": "^1.21.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,0 +1,140 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    background: none;
+    padding: 20px 50px 20px 50px;
+    font-family: $font;
+    z-index: 2;
+}
+
+.headerLeftSection {
+    display: flex;
+    align-items: center;
+    width: 50%;
+
+    img {
+        width: 100px;
+        height: 35px;
+        transform: translateY(2px);
+    }
+
+    button {
+        display: flex;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2vw;
+        letter-spacing: 1px;
+        margin-left: 25px;
+        outline: none;
+    }
+
+    .pageLinks {
+        display: flex;
+        margin-left: 20px;
+    }
+}
+
+.headerRightSection {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+    width: 50%;
+
+    img {
+        width: 30px;
+        height: 30px;
+        margin-left: 25px;
+        margin-right: 10px;
+    }
+
+    i {
+        font-size: 1.5vw;
+        color: white;
+    }
+}
+
+#notification {
+    margin-left: 25px;
+}
+
+#downArrow {
+    transform: translateY(-10px);
+}
+
+.accountDropDownMenu {
+    flex-direction: column;
+    justify-content: space-between;
+    right: 4vw;
+    width: 125px;
+    height: 60px;
+    background: rgba(29, 29, 28, 0.9); 
+    top: 60px;
+    line-height: 30px;
+    position: absolute;
+    z-index: 10;
+    color: white;
+    font-size: 15px;
+    display: none;
+    &.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+        display: flex;
+        background: none;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 15px;
+        letter-spacing: .6px;
+        line-height: 4.5vh;
+    }
+  }
+
+.account-drop-down-list {
+  display: flex;
+  margin-left: 5px;
+  justify-content: flex-start;
+}
+
+.column {
+    width: 150px;
+    overflow: hidden;
+}
+
+// .notificationDropDownMenu {
+//     flex-direction: column;
+//     justify-content: space-between;
+//     right: 4vw;
+//     width: 125px;
+//     height: 60px;
+//     background: rgba(29, 29, 28, 0.9); 
+//     top: 60px;
+//     line-height: 30px;
+//     position: absolute;
+//     z-index: 10;
+//     color: white;
+//     font-size: 15px;
+//     &.active {
+//       display: flex;
+//       flex-direction: column;
+//     }
+//   }
+
+//   .notification-drop-down-list {
+//     display: flex;
+//     margin-left: 5px;
+//     justify-content: flex-start;
+//     &.active {
+//         display: flex;
+//         flex-direction: column;
+//       }
+//   }
+
+

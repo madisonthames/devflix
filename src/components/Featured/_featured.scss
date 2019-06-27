@@ -1,0 +1,76 @@
+main {
+
+    font-family: $font;
+
+    i {
+        font-size: 1.5vw;
+        color: white;
+    }
+
+    .title {
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 9.5vw;
+        color: white;
+    }
+}
+
+.movie-poster {
+    background-image: url("https://cdn-images-1.medium.com/max/1600/1*q4kf_xTQleVMlQkUs8R6Fw.jpeg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+    position: absolute;
+    z-index: -1;
+    opacity: .5;
+}
+
+.fullInfo {
+    position: absolute;
+    width: 35vw;
+    left: 50px;
+    top: 17vh;
+
+    h4 {
+        color: white;
+        width: 40vw;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+        font-size: 1.3vw;
+        line-height: 4vh;        
+    }
+}
+
+.buttonsRow {
+    display: flex;
+    justify-content: space-between;
+    width: 37vw;
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 11vw;
+        height: 6vh;
+        margin-right: 1vw;
+        background: rgba(29, 29, 28, 0.7); 
+        border-radius: 3px;
+        border: none;
+        z-index: -1;
+    }
+
+    p {
+        display: flex;
+        justify-content: center;
+        color: white;
+        font-size: 1.2vw;
+        font-weight: bold;
+        margin-left: .8vw;
+    }
+}
+
+
+

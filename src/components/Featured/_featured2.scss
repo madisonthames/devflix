@@ -1,0 +1,40 @@
+.featured2FullInfo {
+    position: absolute;
+    left: 50px;
+    top: 28vh;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white;
+
+    h1 {
+        font-size: 7.8vw;
+        text-align: center;
+        margin-bottom: 1.5vh;
+    }
+
+    h2 {
+        font-size: 4vw;
+        margin-bottom: 3vh;
+        text-align: center;
+
+    }
+
+    h4 {
+        width: 40vw;
+        margin-top: 2vh;
+        font-family: $font;
+    }
+}
+
+.movie-poster2 {
+    background-image: url("https://mcucosmic.com/wp-content/uploads/2019/02/guardians-galaxy-top.jpg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+    position: absolute;
+    z-index: -1;
+    opacity: .5;
+}
