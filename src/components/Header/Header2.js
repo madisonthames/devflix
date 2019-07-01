@@ -6,7 +6,7 @@ class Header2 extends Component {
         super();
         this.state = {
             color: 'none',
-            accountMenuStatus: 'accountDropDownMenu',
+            accountMenuStatus: 'account-drop-down-menu',
             genreMenuStatus: 'genreDropDownMenu'
           }
     }
@@ -70,7 +70,7 @@ class Header2 extends Component {
                         <div>
                         <img src='https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png'></img>
                         <i id='downArrow' class="fas fa-sort-down" onClick={this.accountHandleClick}></i>
-                        <div id='drop-down-menu' className={this.state.accountMenuStatus + 'accountDropDownMenu'}>
+                        <div id='drop-down-menu' className={this.state.accountMenuStatus + ' account-drop-down-menu'}>
                               <div className='account-drop-down-list'>
                                     <div className='column'>
                                         <button>Account Info</button> 
@@ -89,7 +89,7 @@ class Header2 extends Component {
 
                         <button onClick={this.genreHandleClick}>Genres <i class="fas fa-sort-down"></i></button>
 
-                        <div id='drop-down-menu' className={this.state.genreMenuStatus + 'genreDropDownMenu'}>
+                        <div id='drop-down-menu' className={this.state.genreMenuStatus + ' genreDropDownMenu'}>
                               <div className='drop-down-list'>
                                     <div className='column'>
                                       <Link to='/browse/genre/28' style={{color: 'inherit', textDecoration:'none'}}> <p>Action</p> </Link>

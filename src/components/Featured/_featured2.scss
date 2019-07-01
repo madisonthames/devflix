@@ -38,3 +38,32 @@
     z-index: -1;
     opacity: .5;
 }
+
+.buttonsRow2 {
+    display: flex;
+    justify-content: center;
+    width: 37vw;
+    transform: translateX(17px);
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 11vw;
+        height: 6vh;
+        margin-right: 1vw;
+        background: rgba(29, 29, 28, 0.7); 
+        border-radius: 3px;
+        border: none;
+        z-index: -1;
+    }
+
+    p {
+        display: flex;
+        justify-content: center;
+        color: white;
+        font-size: 1.2vw;
+        font-weight: bold;
+        margin-left: .8vw;
+    }
+}

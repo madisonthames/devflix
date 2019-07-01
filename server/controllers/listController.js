@@ -24,11 +24,9 @@ module.exports = {
         const user_id = req.session.user.id;
         db.get_list(user_id)
         .then(response => {
-            console.log(response)
             res.status(200).json(response)
             })
         .catch(error => {
-          console.log(error);
           res.status(500).send(error);
         })
     },
@@ -36,7 +34,7 @@ module.exports = {
     deleteFromList: (req, res) => {
         const db = req.app.get('db');
         let id = req.params.id
-        let user_id = req.session.user.user_id;
+        let user_id = req.session.user.id;
         db.delete_from_list([user_id, id])
         .then(response => {
             res.status(200).json(response)

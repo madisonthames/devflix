@@ -10,14 +10,14 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    top: 80vh;
-    margin-left: 50px;
+    top: 75vh;
     font-family: $font;
     z-index: 1;
 
     h1 {
         font-size: 25px;
         font-weight: bold;
+        margin-left: 50px;
     }
 
     img {
@@ -34,15 +34,16 @@ body {
         text-overflow: ellipsis;
         transform: translateY(-28px);
         margin-left: 5px;
-        color: black;
+        color: white;
+        text-shadow: 5px 5px 5px black, 0 0 10px black, 0 0 5px black;
         font-weight: bolder;
-        -webkit-text-stroke: white .7px;
     }
 }
 
 .listRow {
     position: static;
     margin: 2vh 0;
+    margin-left: 50px;
     overflow-x: auto;
     overflow-y: auto;
     white-space: nowrap;
@@ -51,7 +52,7 @@ body {
         i {
             color: white;
             transform: translateY(-165px);
-            -webkit-text-stroke: black .7px;
+            text-shadow: 2px 2px 5px black, 0 0 2px black, 0 0 2px black;
         }
 }
 
@@ -59,27 +60,9 @@ body {
     display: inline-block;
 }
 
-.movie {
-    // z-index: 3;
-
-    // &:hover {
-    //     transition: transform .4s ease;
-    //     transform: scale(1.7);
-    // }
-
-    // &--image {
-    //     display: block;
-    // }
-
-    // &--text {
-    //     display: none;
-    // }
-
-    // .icon-group {
-    //     display: block;
-    // }
+.movie--image {
+    height: 145px;
 }
-
 
 .popular2ListRow {
     display: flex;
@@ -93,4 +76,137 @@ body {
         height: 375px;
         margin-right: 5px;
     }
+}
+
+.movie-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 500px;
+    background: black;
+    font-family: $font;
+    overflow: visible;
+    margin-bottom: 20px;
+}
+
+.details-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40vw;
+    margin: 50px;
+
+    h2 {
+        color: white;
+        font-size: 40px;
+        overflow: visible;
+    }
+}
+
+.overview {
+    width: 50vh;
+
+    strong {
+        font-size: 15px;
+        width: 100%;
+        margin-left: 0;
+        color: #999999;
+    }
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+
+    sub {
+        font-size: 12px;
+        width: 50px;
+        margin-left: 0;
+        color: #999999;
+    }
+
+    .time {
+        display: flex;
+        margin-top: 7px;
+    }
+}
+
+.buttons {
+    display: flex;
+    margin-top: 10px;
+
+    #play {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 12vw;
+        height: 8vh;
+        background: #DB1928;
+        border: none;
+    }
+
+    #list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 14vw;
+        height: 8vh;
+        background: none;
+        border: solid white 2px;
+        margin-left: 10px;
+    }
+
+    h4 {
+        display: flex;
+        justify-content: center;
+        color: white;
+        font-size: 1.2vw;
+        font-weight: bold;
+        margin-left: .8vw;
+    }
+
+    i {
+        font-size: 1.5vw;
+        color: white;
+    }
+}
+
+.cast {
+    display: flex;
+    flex-direction: column;
+
+    em{
+        margin-left: 0;
+        font-size: 1.2vw;
+        font-weight: inherit;
+        color: #999999;
+        margin-top: 10px;
+    }
+
+    b {
+        font-size: 1.5vw;
+        font-weight: bold;
+        color: #999999;
+    }
+}
+
+.bottom {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+
+    sub {
+        color: white;
+        font-size: 20px;
+        margin-right: 50px;
+    }
+}
+
+.drop-image {
+    width: 60vw;
+    height: 100%;
+    background-size: cover;
+    right: 0;
+    position: sticky;
 }

@@ -9,54 +9,37 @@ class MyList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [],
+            results: '',
             loggedIn: true,
             user: [],
-            movie: [],
-            cast1: [],
-            cast2: [],
-            cast3: [],
-            isHidden: true,
         }
+    }
+
+    getResults(input) {
+        axios.get(`/api/browse/results/?input=${input}`)
+          .then(( results ) => {
+            this.setState(() => ({ results }));
+          });
     }
 
     componentDidMount() {
-        this.props.getUser()
-        this.getList();
+        const { input } = this.props.match.params
+        let joined = input.split(' ').join('%20')
+        this.getResults(joined)
     }
 
-    getList = () => {
-        axios
-        .get("/api/mylist")
-        .then(response => {
-          this.setState({ list: response.data });
-        }).catch(error => {
-            this.setState({ error: "Oops, please try again."})
-        }
-            )
-    };
-
-    deleteFromList = id => {
-        axios
-          .delete(`/api/delete/${id}`)
-          .then(response => {
-            this.getList();
-            this.setState({list: response.data})
-           })
-      };
-    
-
     render() {
+        let input = this.props.match.params.input
         const { list } = this.state;
         return (
             <section>
                 < Header />
 
-            <div className='my-list'>
-                <h1>My List</h1>
+            <div className='search'>
+                <h1>Results</h1>
 
                     <div className='my-list-row'>
-                        {list.map((listMovie, index) => (
+                        {/* {list.map((listMovie, index) => (
                             
                                 <div className='movie'>
                                     {console.log(listMovie)}
@@ -67,7 +50,7 @@ class MyList extends Component {
                                         </div>
                                 </div>
 
-                        ))}
+                        ))} */}
                     </div>
             </div>
 

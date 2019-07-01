@@ -13,31 +13,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .header2bottom {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: 10vh;
 
     h1 {
-        font-size: 2.5vw;
+        font-size: 25px;
         font-weight: bold;
-        transform: translateX(4px);
     }
 
     .bottomContent {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 22vw;
+        transform: translateX(4px);
+        width: 200px;
     }
 
     button  {
         display: flex;
-        position: absolute;
-        left: 15vw;
         justify-content: space-between;
         align-items: center;
         width: 100px;
@@ -48,8 +46,8 @@
         z-index: 10;
     
         i {
-            font-size: 1.7vw;
-            transform: translateY(-3.5px);
+            font-size: 25px;
+            transform: translateY(-5px);
         }
     }
 }
@@ -59,8 +57,8 @@
     justify-content: flex-start;
     width: 400px;
     height: 185px;
-    left: 15vw;
-    top: 101px;
+    left: 100px;
+    top: 30px;
     background-color: black;
     position: absolute;
     z-index: 10;

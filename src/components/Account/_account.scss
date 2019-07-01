@@ -1,0 +1,60 @@
+.full-account {
+    display: flex;
+    justify-content: center;
+}
+
+.account {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 50vw;
+    height: 50vh;
+    top: 15vh;
+    margin-top: 20px;
+    position: absolute;
+    background-color: $main-background;
+    font-family: $font;
+
+    button {
+        width: 40vw;
+        height: 10vh;
+        background: #DC1928;
+        border: none;
+        color: white;
+        font-size: 1.5vw;
+        margin-top: 2.5vh;
+    }
+
+    .input {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        input {
+            width: 40vw;
+            height: 10vh;
+        }
+    }
+
+    h1 {
+        font-size: 3vw;
+        line-height: 10vh;
+    }
+
+    h2 {
+        color: white;
+        font-size: 2vw;
+        line-height: 10vh;
+    }
+
+    h3 {
+        color: white;
+        margin-left: 1vw;
+        font-size: 2vw;
+        line-height: 10vh;
+    }
+
+    .signUp {
+        display: flex;
+  }
+}

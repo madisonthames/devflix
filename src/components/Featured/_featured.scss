@@ -9,7 +9,7 @@ main {
 
     .title {
         font-family: 'Luckiest Guy', cursive;
-        font-size: 9.5vw;
+        font-size: 8.5vw;
         color: white;
     }
 }
@@ -46,7 +46,7 @@ main {
 
 .buttonsRow {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 37vw;
 
     button {
@@ -59,7 +59,7 @@ main {
         background: rgba(29, 29, 28, 0.7); 
         border-radius: 3px;
         border: none;
-        z-index: -1;
+        // z-index: -1;
     }
 
     p {

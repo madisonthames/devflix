@@ -26,19 +26,19 @@
         text-overflow: ellipsis;
         transform: translateY(-28px);
         margin-left: 5px;
-        color: black;
+        color: white;
         font-weight: bolder;
-        -webkit-text-stroke: white .7px;
+        text-shadow: 2px 2px 5px black, 0 0 2px black, 0 0 2px black;
     }
 }
 
 .my-list-row {
     position: static;
     margin: 2vh 0;
-
     overflow-y: auto;
     white-space: nowrap;
     display: flex;
+    flex-wrap: wrap;
 
         i {
             color: white;

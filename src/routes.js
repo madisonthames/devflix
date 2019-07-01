@@ -10,6 +10,7 @@ import Video from './components/Video/Video';
 import Genre from './components/Genre/Genre';
 import Account from './components/Account/Account';
 import MyList from './components/MyList/MyList';
+import Search from './components/Search/Search';
 
 
 export default (
@@ -24,5 +25,6 @@ export default (
         <Route path='/browse/genre/:id' exact component={Genre}/>
         <Route path='/account' component={Account}/>
         <Route path='/browse/my-list' exact component={MyList}/>
+        <Route path='/browse/results/:input' exact component={Search}/>
     </Switch>
 )

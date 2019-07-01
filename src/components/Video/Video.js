@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import YouTube from 'react-youtube';
+import { Link } from 'react-router-dom';
+import VideoHeader from '../Header/VideoHeader';
 
 class Video extends Component {
     constructor() {
@@ -26,10 +27,14 @@ class Video extends Component {
 
         return (
             <div className='fullVideo'>
+                <div className='video-header'>
+                    < VideoHeader />
+                </div>
+
                 <iframe src={`https://www.youtube.com/embed/${video.key}`} 
                     className='video'
-                    width="100%"
-                    height="100%">
+                    width="100vw"
+                    height="100vh">
                 </iframe>
             </div>
 

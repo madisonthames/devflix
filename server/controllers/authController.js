@@ -49,5 +49,20 @@ module.exports = {
         if(req.session.user) {
             return res.json(req.session.user)
         } 
+    },
+    updateUsername: (req, res) => {
+        const db = req.app.get('db');
+        const {updateUsername} = req.body
+        const username = req.params.username
+        db.update_username([username, updateUsername])
+        .then(() => {
+            db.get_user(updateUsername)
+            .then(response => {
+                console.log(response)
+            res.status(200).json(response)
+        })})
+        .catch(err => {
+            res.status(500).send("Error");
+        });
     }
 } 

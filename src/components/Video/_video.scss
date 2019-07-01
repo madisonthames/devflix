@@ -1,7 +1,6 @@
-.fullVideo {
-    width: 100vw;
-    height: 90vh;
-    background: none;
+.video-header {
+    z-index: 10;
+    position: relative;
 }
 
 .video {
@@ -9,4 +8,5 @@
     height: 100vh;
     position: fixed;
     top: 0;
+    z-index: 1;
 }

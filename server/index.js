@@ -31,6 +31,7 @@ massive(CONNECTION_STRING)
     })
 
 
+//get external API
 app.get('/api/popular', dataController.getPopular)
 app.get('/api/nineties', dataController.getNineties)
 app.get('/api/comedy', dataController.getComedy)
@@ -53,16 +54,27 @@ app.get('/api/browse/genre/2000s/:id', dataController.getGenre00s)
 app.get('/api/browse/genre/trending/:id', dataController.getGenreTrendingNow)
 app.get('/api/browse/genre/top/:id', dataController.getGenreTopPicks)
 app.get('/api/browse/genre/box-office/:id', dataController.getBoxOfficeTop)
+app.get('/api/browse/movie/:id', dataController.getMovieDetails)
+app.get('/api/browse/movie/cast/:id', dataController.getStars)
+app.get('/api/lala', dataController.getLala)
+app.get('/api/guardians', dataController.getGuardians)
+app.get('/api/browse/results/', dataController.getResults)
 
+//get external API
 app.get('/auth/user', authCtrl.getUser);
 app.get('/api/mylist', listController.getList)
 
+//post to DB
 app.post('/auth/register', authCtrl.register);
 app.post('/auth/login', authCtrl.login);
 app.post('/auth/logout', authCtrl.logout);
 app.post('/api/mylist', listController.addToList)
 
-app.delete('/api/delete', listController.deleteFromList)
+//delete from DB
+app.delete('/api/delete/:id', listController.deleteFromList)
+
+//put to DB
+app.put('/auth/account/:username', authCtrl.updateUsername)
 
 
 

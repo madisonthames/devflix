@@ -3,7 +3,6 @@ const { API_KEY } = process.env
 
 //functions
 const getPopular = (req, res) => {
-    // check to see if session user exists, if it does exist make axios request to get data, if it doesnt exixt send 401 
     if (req.session.user) {
         axios
         .get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=2`)
@@ -171,6 +170,41 @@ const getBoxOfficeTop = (req, res) => {
     })
 }
 
+const getMovieDetails = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/movie/${req.params.id}?api_key=${API_KEY}&language=en-US`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
+const getStars = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/movie/${req.params.id}/credits?api_key=${API_KEY}`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
+const getLala = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/movie/313369?api_key=${API_KEY}&language=en-US`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
+const getGuardians = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/movie/118340?api_key=${API_KEY}&language=en-US`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
+const getResults = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${req.query.input}&page=1&include_adult=false`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
 //exports
 module.exports = {
     getPopular,
@@ -194,6 +228,11 @@ module.exports = {
     getGenre00s,
     getGenreTrendingNow,
     getGenreTopPicks,
-    getBoxOfficeTop
+    getBoxOfficeTop,
+    getMovieDetails,
+    getStars,
+    getLala,
+    getGuardians,
+    getResults
 }
 

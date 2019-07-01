@@ -9,11 +9,26 @@ class Header extends Component {
         super();
         this.state = {
             color: 'none',
-            accountMenuStatus: 'accountDropDownMenu',
-            notifications: 'notificationDropDown',
-            loggedOut: false
+            accountMenuStatus: 'account-drop-down-menu',
+            notificationMenuStatus: 'notification-drop-down-menu',
+            loggedOut: false,
+            value: '',
+            redirect: false
           }
+
+          this.handleChange = this.handleChange.bind(this);
+          this.onSubmit = this.onSubmit.bind(this);
     }
+
+          handleChange(e) {
+            this.setState({ value: e.target.value });
+            
+          }
+
+          onSubmit(e) {
+            this.setState({ redirect: true })
+          }
+
           listenScrollEvent = e => {
             if (window.scrollY > 30) {
               this.setState({color: '#141414'})
@@ -33,10 +48,10 @@ class Header extends Component {
 
           notificationHandleClick = () => {
             if
-            (this.state.notifications === 'active') {
-              this.setState({notifications: 'unactive'})
+            (this.state.notificationMenuStatus === 'active') {
+              this.setState({notificationMenuStatus: 'unactive'})
             } else {
-              this.setState({notifications: 'active'})
+              this.setState({notificationMenuStatus: 'active'})
             }
           }
 
@@ -52,10 +67,12 @@ class Header extends Component {
     
     render() {
 
-        const {loggedOut} = this.state;
+        const {loggedOut, redirect} = this.state;
 
         if (loggedOut) {
             return  <Redirect to='/'/>
+          } else if (redirect) {
+            return <Redirect to={`/browse/results/${this.state.value}`} />
           }
 
         return (
@@ -74,22 +91,29 @@ class Header extends Component {
 
                 <div className='headerRightSection'>
                     
-                    <i class="fas fa-search"></i>
-                    <i id='notification' class="fas fa-bell"></i>
-                            {/* <div className='notification-drop-down-list'>
-                                <p>No notifications.</p>
-                            </div> */}
+                    {/* <i class="fas fa-search"></i> */}
+
+                    <input placeholder='Search'
+                    type='text'
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    ></input> <button className='go' onClick={this.onSubmit} type='submit'> <i class="fas fa-search"></i> </button>
+                    <i id='notification' class="fas fa-bell" onClick={this.notificationHandleClick}></i>
+                        <div className={this.state.notificationMenuStatus + ' notification-drop-down-menu'}>
+                            <div className='notification-drop-down-list'> No new notifications.</div>
+                        </div>
+
                     <div>
                         <img src='https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png'></img>
                         <i id='downArrow' class="fas fa-sort-down" onClick={this.handleClick}></i>
-                        <div id='drop-down-menu' className={this.state.accountMenuStatus + ' accountDropDownMenu'}>
-                              <div className='account-drop-down-list'>
-                                    <div className='column'>
-                                        <button>Account Info</button> 
-                                        <button onClick={() => this.logout()}>Log Out</button>
-                                    </div>
-                            </div>
-                        </div>
+                            <div className={this.state.accountMenuStatus + ' account-drop-down-menu'}>
+                                <div className='account-drop-down-list'>
+                                      <div className='column'>
+                                          <Link to='/account' style={{textDecoration:'none'}}> <button>Account Info</button> </Link>
+                                          <button onClick={() => this.logout()}>Log Out</button>
+                                      </div>
+                              </div>
+                          </div>
                     </div>
 
                 </div>

@@ -56,25 +56,29 @@
         font-size: 1.5vw;
         color: white;
     }
-}
 
-#notification {
-    margin-left: 25px;
+    input {
+        background: black;
+        color: white;
+    }
+
+    .go {
+        background: black;
+    }
 }
 
 #downArrow {
     transform: translateY(-10px);
 }
 
-.accountDropDownMenu {
+.account-drop-down-menu {
     flex-direction: column;
     justify-content: space-between;
     right: 4vw;
     width: 125px;
-    height: 60px;
-    background: rgba(29, 29, 28, 0.9); 
+    height: 90px;
+    background: $main-background; 
     top: 60px;
-    line-height: 30px;
     position: absolute;
     z-index: 10;
     color: white;
@@ -108,33 +112,34 @@
     overflow: hidden;
 }
 
-// .notificationDropDownMenu {
-//     flex-direction: column;
-//     justify-content: space-between;
-//     right: 4vw;
-//     width: 125px;
-//     height: 60px;
-//     background: rgba(29, 29, 28, 0.9); 
-//     top: 60px;
-//     line-height: 30px;
-//     position: absolute;
-//     z-index: 10;
-//     color: white;
-//     font-size: 15px;
-//     &.active {
-//       display: flex;
-//       flex-direction: column;
-//     }
-//   }
+#notification {
+    margin-left: 25px;
+}
 
-//   .notification-drop-down-list {
-//     display: flex;
-//     margin-left: 5px;
-//     justify-content: flex-start;
-//     &.active {
-//         display: flex;
-//         flex-direction: column;
-//       }
-//   }
+.notification-drop-down-menu {
+    flex-direction: column;
+    justify-content: center;
+    right: 4vw;
+    width: 125px;
+    height: 60px;
+    background: $main-background; 
+    top: 60px;
+    line-height: 30px;
+    position: absolute;
+    z-index: 10;
+    color: white;
+    display: none;
+    font-size: 12px;
+    &.active {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .notification-drop-down-list {
+    display: flex;
+    margin-left: 5px;
+    justify-content: flex-start;
+  }
 
 
