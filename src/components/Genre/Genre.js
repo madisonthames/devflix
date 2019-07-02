@@ -15,12 +15,14 @@ class Genre extends Component {
             top: [],
             boxOffice: [],
             loggedIn: true,
-            user: []
+            user: [],
+            isHidden: true,
+            hiddenGenre: ''
         }
-
+        this.toggleHidden = this.toggleHidden.bind(this);
+        this.changeDate = this.changeDate.bind(this);
         this.getMovies = this.getMovies.bind(this);
     }
-    // 313369
 
     addToList(movie) {
         axios
@@ -90,6 +92,38 @@ class Genre extends Component {
 
     }
 
+    addToList(movie) {
+        axios
+        .post("/api/mylist", movie)
+        .then(response => {
+            alert('Saved to your list!');
+        })
+    }
+
+    toggleHidden(id, genre) {
+        axios
+        .get(`/api/browse/movie/${id}`)
+        .then(response => {
+            this.setState({ movie: response.data, isHidden: !this.state.isHidden, hiddenGenre: genre });
+        })
+        .catch(error => {
+            this.setState({ error: "Oops, comedy please try again."})
+        });
+
+        axios
+        .get(`/api/browse/movie/cast/${id}`)
+        .then(response => {
+            console.log(response.data.cast[0])
+            this.setState({ cast: response.data.cast[0].name, cast2: response.data.cast[1].name, cast3: response.data.cast[2].name })
+        })
+    }
+
+    changeDate(str) {
+        let newStr = str.split('')
+        newStr.splice(4, 6)
+        return newStr.join('')
+    }
+
 
 
 
@@ -124,28 +158,50 @@ class Genre extends Component {
                     <div className='listRow'>
                             {boxOffice.map((boxOfficeMovie, index) => (
                                     <div className='movie'>
-                                        <Link to={`/browse/play/${boxOfficeMovie.id}`} style={{textDecoration:'none'}}>
-
-                                            <div className='movie--image'>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${boxOfficeMovie.backdrop_path}`)} ></img>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(boxOfficeMovie.id, 'boxOffice')}>
+                                                {boxOfficeMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${boxOfficeMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{boxOfficeMovie.title}</p>  
-
                                             </div>
-                                        </Link>
-                                            <i class="fas fa-plus-circle" onClick={() => this.addToList(boxOfficeMovie)}></i>    
+                                    </div>
+                            ))}
+                    </div>
 
-                                        {/* <div className='movie--text'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
-                                            <p>{popularMovie.title}</p>   
-                                            <div className='icon-group'> 
-                                                <i class="fas fa-play-circle"></i>
-                                                <i class="fas fa-plus-circle"></i>
-                                                <i id='down' class="fas fa-angle-down"></i>
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'boxOffice' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
                                             </div>
-                                        </div> */}
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
                                     </div>
 
-                            ))}
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
                     </div>
                 </section>
 
@@ -155,28 +211,51 @@ class Genre extends Component {
                     <div className='listRow'>
                             {nineties.map((ninetiesMovie, index) => (
                                     <div className='movie'>
-                                        <Link to={`/browse/play/${ninetiesMovie.id}`} style={{textDecoration:'none'}}>
-
-                                            <div className='movie--image'>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${ninetiesMovie.backdrop_path}`)} ></img>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(ninetiesMovie.id, 'nineties')}>
+                                                {ninetiesMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${ninetiesMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{ninetiesMovie.title}</p>  
-
                                             </div>
-                                        </Link>
-                                            <i class="fas fa-plus-circle" onClick={() => this.addToList(ninetiesMovie)}></i>    
-
-                                        {/* <div className='movie--text'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
-                                            <p>{popularMovie.title}</p>   
-                                            <div className='icon-group'> 
-                                                <i class="fas fa-play-circle"></i>
-                                                <i class="fas fa-plus-circle"></i>
-                                                <i id='down' class="fas fa-angle-down"></i>
-                                            </div>
-                                        </div> */}
                                     </div>
 
                             ))}
+                    </div>
+
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'nineties' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
+                                            </div>
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
+                                    </div>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
                     </div>
                 </section>
 
@@ -186,28 +265,51 @@ class Genre extends Component {
                     <div className='listRow'>
                             {trending.map((trendingMovie, index) => (
                                     <div className='movie'>
-                                        <Link to={`/browse/play/${trendingMovie.id}`} style={{textDecoration:'none'}}>
-
-                                            <div className='movie--image'>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${trendingMovie.backdrop_path}`)} ></img>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(trendingMovie.id, 'trending')}>
+                                                {trendingMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${trendingMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{trendingMovie.title}</p>  
-
                                             </div>
-                                        </Link>
-                                            <i class="fas fa-plus-circle" onClick={() => this.addToList(trendingMovie)}></i>    
-
-                                        {/* <div className='movie--text'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
-                                            <p>{popularMovie.title}</p>   
-                                            <div className='icon-group'> 
-                                                <i class="fas fa-play-circle"></i>
-                                                <i class="fas fa-plus-circle"></i>
-                                                <i id='down' class="fas fa-angle-down"></i>
-                                            </div>
-                                        </div> */}
                                     </div>
 
                             ))}
+                    </div>
+
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'trending' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
+                                            </div>
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
+                                    </div>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
                     </div>
                 </section>
 
@@ -217,28 +319,51 @@ class Genre extends Component {
                     <div className='listRow'>
                             {popular.map((popularMovie, index) => (
                                     <div className='movie'>
-                                        <Link to={`/browse/play/${popularMovie.id}`} style={{textDecoration:'none'}}>
-
-                                            <div className='movie--image'>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(popularMovie.id, 'popular')}>
+                                                {popularMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{popularMovie.title}</p>  
-
                                             </div>
-                                        </Link>
-                                            <i class="fas fa-plus-circle" onClick={() => this.addToList(popularMovie)}></i>    
-
-                                        {/* <div className='movie--text'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
-                                            <p>{popularMovie.title}</p>   
-                                            <div className='icon-group'> 
-                                                <i class="fas fa-play-circle"></i>
-                                                <i class="fas fa-plus-circle"></i>
-                                                <i id='down' class="fas fa-angle-down"></i>
-                                            </div>
-                                        </div> */}
                                     </div>
 
                             ))}
+                    </div>
+
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'popular' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
+                                            </div>
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
+                                    </div>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
                     </div>
                 </section>
 
@@ -248,28 +373,51 @@ class Genre extends Component {
                     <div className='listRow'>
                             {twoThousands.map((twoThousandsMovie, index) => (
                                     <div className='movie'>
-                                        <Link to={`/browse/play/${twoThousandsMovie.id}`} style={{textDecoration:'none'}}>
-
-                                            <div className='movie--image'>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${twoThousandsMovie.backdrop_path}`)} ></img>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(twoThousandsMovie.id, 'twoThousands')}>
+                                                {twoThousandsMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${twoThousandsMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{twoThousandsMovie.title}</p>  
-
                                             </div>
-                                        </Link>
-                                            <i class="fas fa-plus-circle" onClick={() => this.addToList(twoThousandsMovie)}></i>    
-
-                                        {/* <div className='movie--text'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
-                                            <p>{popularMovie.title}</p>   
-                                            <div className='icon-group'> 
-                                                <i class="fas fa-play-circle"></i>
-                                                <i class="fas fa-plus-circle"></i>
-                                                <i id='down' class="fas fa-angle-down"></i>
-                                            </div>
-                                        </div> */}
                                     </div>
 
                             ))}
+                    </div>
+
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'twoThousands' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
+                                            </div>
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
+                                    </div>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
                     </div>
                 </section>
 
@@ -279,28 +427,51 @@ class Genre extends Component {
                     <div className='listRow'>
                             {top.map((topMovie, index) => (
                                     <div className='movie'>
-                                        <Link to={`/browse/play/${topMovie.id}`} style={{textDecoration:'none'}}>
-
-                                            <div className='movie--image'>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${topMovie.backdrop_path}`)} ></img>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(topMovie.id, 'top')}>
+                                                {topMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${topMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{topMovie.title}</p>  
-
                                             </div>
-                                        </Link>
-                                            <i class="fas fa-plus-circle" onClick={() => this.addToList(topMovie)}></i>    
-
-                                        {/* <div className='movie--text'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
-                                            <p>{popularMovie.title}</p>   
-                                            <div className='icon-group'> 
-                                                <i class="fas fa-play-circle"></i>
-                                                <i class="fas fa-plus-circle"></i>
-                                                <i id='down' class="fas fa-angle-down"></i>
-                                            </div>
-                                        </div> */}
                                     </div>
 
                             ))}
+                    </div>
+
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'top' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
+                                            </div>
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
+                                    </div>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
                     </div>
                 </section>
             </div>

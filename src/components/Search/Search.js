@@ -30,13 +30,20 @@ class MyList extends Component {
         console.log(joined)
     }
 
+    componentDidUpdate(prevProps) {
+        const { match: { params: search } } = this.props;
+
+        const prevSearch = prevProps.match.params
+
+        if (prevSearch !== search) {
+            this.getResults(search);
+            }
+
+    }
+
     render() {
         let input = this.props.match.params.input
         const { results } = this.state;
-
-        function checkForPoster() {
-
-        }
 
         return (
             <section>
@@ -47,15 +54,12 @@ class MyList extends Component {
 
                     <div className='my-list-row'>
                         {results.map((resultMovie, index) => (
-                            // if there is a movie path display else use other
                                 <div className='movie'>
                                         <div className='movie--image'>
-
-                                            if(resultMovie.backdrop_path !== null) {
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${resultMovie.backdrop_path}`)} ></img>
-                                               
-                                            } else {
-                                                <img src='https://cdn.amctheatres.com/Media/Default/Images/noposter.jpg'></img> 
+                                            {resultMovie.backdrop_path ?
+                                                <img src={(`https://image.tmdb.org/t/p/w500/${resultMovie.backdrop_path}`)} ></img>  
+                                            :
+                                                <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
                                             }
                                         }
                                             <p>{resultMovie.title}</p>  

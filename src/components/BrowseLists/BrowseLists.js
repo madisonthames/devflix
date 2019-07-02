@@ -131,7 +131,11 @@ class BrowseLists extends Component {
                             {popular.map((popularMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(popularMovie.id, 'popular')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>
+                                                {popularMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${popularMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{popularMovie.title}</p>  
                                             </div>
                                     </div>
@@ -181,7 +185,11 @@ class BrowseLists extends Component {
                             {nineties.map((ninetiesMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(ninetiesMovie.id, 'nineties')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${ninetiesMovie.backdrop_path}`)} ></img>
+                                                {ninetiesMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${ninetiesMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{ninetiesMovie.title}</p>  
                                             </div> 
                                     </div>
@@ -230,7 +238,11 @@ class BrowseLists extends Component {
                             {comedy.map((comedyMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(comedyMovie.id, 'comedy')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${comedyMovie.backdrop_path}`)} ></img>
+                                                {comedyMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${comedyMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{comedyMovie.title}</p>  
                                             </div> 
                                     </div>
@@ -279,7 +291,11 @@ class BrowseLists extends Component {
                             {drama.map((dramaMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(dramaMovie.id, 'drama')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${dramaMovie.backdrop_path}`)} ></img>
+                                                {dramaMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${dramaMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{dramaMovie.title}</p>  
                                             </div> 
                                     </div>
@@ -329,7 +345,11 @@ class BrowseLists extends Component {
                             {family.map((familyMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(familyMovie.id, 'family')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${familyMovie.backdrop_path}`)} ></img>
+                                                {familyMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${familyMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{familyMovie.title}</p>  
                                             </div> 
                                     </div>

@@ -13,17 +13,29 @@ class Header extends Component {
             notificationMenuStatus: 'notification-drop-down-menu',
             loggedOut: false,
             value: '',
-            redirect: false
+            redirect: false,
+            search: 'search-input', 
+            icon: 'search'
           }
 
           this.handleChange = this.handleChange.bind(this);
           this.onSubmit = this.onSubmit.bind(this);
+          this.searchToggle = this.searchToggle.bind(this);
     }
+
+          searchToggle() {
+            if
+            (this.state.search === 'active') {
+              this.setState({search: 'unactive'})
+            } else {
+              this.setState({search: 'active'})
+            }
+          }
 
           handleChange(e) {
             this.setState({ value: e.target.value });
-            
           }
+
 
           onSubmit(e) {
             this.setState({ redirect: true })
@@ -91,13 +103,16 @@ class Header extends Component {
 
                 <div className='headerRightSection'>
                     
-                    {/* <i class="fas fa-search"></i> */}
+                    <i class="fas fa-search" id='search' onClick={this.searchToggle}></i>
 
-                    <input placeholder='Search'
-                    type='text'
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    ></input> <button className='go' onClick={this.onSubmit} type='submit'> <i class="fas fa-search"></i> </button>
+                    <div className={this.state.search + ' search-input'}>
+                      <input placeholder='Search'
+                      type='text'
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                      ></input> <button className='go' onClick={this.onSubmit} type='submit'> <i class="fas fa-search"></i> </button>
+                    </div>          
+
                     <i id='notification' class="fas fa-bell" onClick={this.notificationHandleClick}></i>
                         <div className={this.state.notificationMenuStatus + ' notification-drop-down-menu'}>
                             <div className='notification-drop-down-list'> No new notifications.</div>

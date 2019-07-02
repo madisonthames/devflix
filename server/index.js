@@ -10,11 +10,7 @@ const dataController = require('./controllers/data');
 const listController = require('./controllers/listController');
 const authCtrl = require('./controllers/authController');
 
-const path = require('path');
-
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, '../build/index.html'));
-});
+app.use( express.static( `${__dirname}/../build` ) )
 
 app.use(express.json())
 

@@ -14,6 +14,7 @@ class BrowseLists2 extends Component {
             romance: [],
             mystery: [],
             family: [],
+            documentary: [],
             music: [],
             thriller: [],
             popular2: [],
@@ -175,7 +176,11 @@ class BrowseLists2 extends Component {
                             {action.map((actionMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(actionMovie.id, 'action')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${actionMovie.backdrop_path}`)} ></img>
+                                                {actionMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${actionMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{actionMovie.title}</p> 
                                             </div>
                                     </div>
@@ -226,7 +231,11 @@ class BrowseLists2 extends Component {
                             {comedy2.map((comedy2Movie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(comedy2Movie.id, 'comedy2')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${comedy2Movie.backdrop_path}`)} ></img>
+                                                {comedy2Movie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${comedy2Movie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{comedy2Movie.title}</p>  
                                             </div>
                                     </div>
@@ -275,7 +284,11 @@ class BrowseLists2 extends Component {
                             {romance.map((romanceMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(romanceMovie.id, 'romance')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${romanceMovie.backdrop_path}`)} ></img>
+                                                {romanceMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${romanceMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{romanceMovie.title}</p>  
                                             </div>
                                     </div>
@@ -285,6 +298,59 @@ class BrowseLists2 extends Component {
 
                     <div>
                     {!this.state.isHidden && this.state.hiddenGenre === 'romance' &&
+                                <div className='movie-details'>
+                                    <div className='details-info'>
+                                        <div className='top'>
+                                            <h2>{this.state.movie.title}</h2>
+                                            <div className='time'>
+                                                <sub>{this.changeDate(this.state.movie.release_date)}</sub>
+                                                <sub>1h 57m</sub>
+                                            </div>
+                                        </div>
+
+                                        <div className='overview'>
+                                            <strong> {this.state.movie.overview} </strong>
+                                        </div>
+
+                                        <div className='buttons'>
+                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                        </div>
+
+                                        <div className='cast'>
+                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                        </div>
+
+                                    </div>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                </div>
+                            }  
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Documentaries</h1>
+
+                    <div className='listRow'>
+                            {documentary.map((documentaryMovie, index) => (
+                                    <div className='movie'>
+                                            <div className='movie--image' onClick={() => this.toggleHidden(documentaryMovie.id, 'documentary')}>
+                                                {documentaryMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${documentaryMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
+                                                <p>{documentaryMovie.title}</p>  
+                                            </div>
+                                    </div>
+                            ))}
+                    </div>
+
+                    <div>
+                    {!this.state.isHidden && this.state.hiddenGenre === 'documentary' &&
                                 <div className='movie-details'>
                                     <div className='details-info'>
                                         <div className='top'>
@@ -375,7 +441,11 @@ class BrowseLists2 extends Component {
                             {music.map((musicMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(musicMovie.id, 'music')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${musicMovie.backdrop_path}`)} ></img>
+                                                {musicMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${musicMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{musicMovie.title}</p>  
                                             </div>
                                     </div>
@@ -425,7 +495,11 @@ class BrowseLists2 extends Component {
                             {family.map((familyMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(familyMovie.id, 'family')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${familyMovie.backdrop_path}`)} ></img>
+                                                {familyMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${familyMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{familyMovie.title}</p>  
                                             </div>
                                     </div>
@@ -475,7 +549,11 @@ class BrowseLists2 extends Component {
                             {thriller.map((thrillerMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(thrillerMovie.id, 'thriller')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${thrillerMovie.backdrop_path}`)} ></img>
+                                                {thrillerMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${thrillerMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{thrillerMovie.title}</p>  
 
                                             </div>
@@ -526,7 +604,11 @@ class BrowseLists2 extends Component {
                             {mystery.map((mysteryMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(mysteryMovie.id, 'mystery')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${mysteryMovie.backdrop_path}`)} ></img>
+                                                {mysteryMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${mysteryMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{mysteryMovie.title}</p>  
                                             </div>
                                     </div>
@@ -576,7 +658,11 @@ class BrowseLists2 extends Component {
                             {tv.map((tvMovie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(tvMovie.id, 'tv')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${tvMovie.backdrop_path}`)} ></img>
+                                                {tvMovie.backdrop_path ?
+                                                    <img src={(`https://image.tmdb.org/t/p/w500/${tvMovie.backdrop_path}`)} ></img>  
+                                                :
+                                                    <img src='https://cdn.traileraddict.com/images/errors/noposter.jpg'></img> 
+                                                }
                                                 <p>{tvMovie.title}</p>  
                                             </div>
                                     </div>
