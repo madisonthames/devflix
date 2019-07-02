@@ -385,4 +385,4 @@ function mapStateToProps(state) {
   
   
   
-  export default connect(mapStateToProps, {getUser})(BrowseLists);
+export default connect(mapStateToProps, {getUser})(BrowseLists);

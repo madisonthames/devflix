@@ -9,16 +9,17 @@ class MyList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: '',
+            results: [],
             loggedIn: true,
             user: [],
+            poster: false
         }
     }
 
     getResults(input) {
         axios.get(`/api/browse/results/?input=${input}`)
           .then(( results ) => {
-            this.setState(() => ({ results }));
+            this.setState(() => ({ results: results.data.results }));
           });
     }
 
@@ -26,11 +27,17 @@ class MyList extends Component {
         const { input } = this.props.match.params
         let joined = input.split(' ').join('%20')
         this.getResults(joined)
+        console.log(joined)
     }
 
     render() {
         let input = this.props.match.params.input
-        const { list } = this.state;
+        const { results } = this.state;
+
+        function checkForPoster() {
+
+        }
+
         return (
             <section>
                 < Header />
@@ -39,18 +46,23 @@ class MyList extends Component {
                 <h1>Results</h1>
 
                     <div className='my-list-row'>
-                        {/* {list.map((listMovie, index) => (
-                            
+                        {results.map((resultMovie, index) => (
+                            // if there is a movie path display else use other
                                 <div className='movie'>
-                                    {console.log(listMovie)}
                                         <div className='movie--image'>
-                                            <img src={(`https://image.tmdb.org/t/p/w500/${listMovie.backdrop}`)} ></img>
-                                            <p>{listMovie.title}</p>  
-                                            <i class="fas fa-minus-circle" onClick={() => this.deleteFromList(listMovie.movie_id)}></i>
+
+                                            if(resultMovie.backdrop_path !== null) {
+                                                <img src={(`https://image.tmdb.org/t/p/w500/${resultMovie.backdrop_path}`)} ></img>
+                                               
+                                            } else {
+                                                <img src='https://cdn.amctheatres.com/Media/Default/Images/noposter.jpg'></img> 
+                                            }
+                                        }
+                                            <p>{resultMovie.title}</p>  
                                         </div>
                                 </div>
 
-                        ))} */}
+                        ))}
                     </div>
             </div>
 
