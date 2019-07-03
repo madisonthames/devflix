@@ -310,7 +310,7 @@ class BrowseLists extends Component {
                         </div>
                 </section>
 
-                <section>
+                {/* <section>
                     <h1>Blockbuster Movies</h1>
 
                     <div className='popular2ListRow'>
@@ -364,7 +364,7 @@ class BrowseLists extends Component {
                                 </div>
                             }  
                     </div>
-                </section>
+                </section> */}
 
 
                 <section>
@@ -427,7 +427,7 @@ class BrowseLists extends Component {
                         </div>
                 </section>
 
-                <section>
+                {/* <section>
                     <h1>Throwbacks for the Kids</h1>
 
                     <div className='listRow'>
@@ -485,9 +485,9 @@ class BrowseLists extends Component {
                                     </div>
                                 }  
                         </div>
-                </section>
+                </section> */}
 
-                <section>
+                {/* <section>
                     <h1>Starring Brad Pitt</h1>
 
                     <div className='listRow'>
@@ -545,7 +545,7 @@ class BrowseLists extends Component {
                                     </div>
                                 }  
                         </div>
-                </section>
+                </section> */}
 
                 <section>
                     <h1>Dramas</h1>
