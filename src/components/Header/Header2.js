@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {logout} from '../../ducks/reducer';
 
 class Header2 extends Component {
     constructor() {
@@ -7,14 +9,52 @@ class Header2 extends Component {
         this.state = {
             color: 'none',
             accountMenuStatus: 'account-drop-down-menu',
-            genreMenuStatus: 'genreDropDownMenu'
+            genreMenuStatus: 'genreDropDownMenu',
+            notificationMenuStatus: 'notification-drop-down-menu',
+            value: '',
+            redirect: false,
+            loggedOut: false,
+            search: 'search-input', 
+            icon: 'search-icon'
           }
+
+          this.handleChange = this.handleChange.bind(this);
+          this.onSubmit = this.onSubmit.bind(this);
+          this.searchToggle = this.searchToggle.bind(this);
     }
+
           listenScrollEvent = event => {
             if (window.scrollY > 30) {
               this.setState({color: '#141414'})
             } else {
               this.setState({color: 'none'})
+            }
+          }
+
+          searchToggle() {
+            if
+            (this.state.search === 'active') {
+              this.setState({search: 'unactive', icon: 'active'})
+            } else {
+              this.setState({search: 'active', icon: 'unactive'})
+            }
+          }
+
+          handleChange(e) {
+            this.setState({ value: e.target.value });
+          }
+
+
+          onSubmit(e) {
+            this.setState({ redirect: true })
+          }
+
+          handleClick = () => {
+            if
+            (this.state.accountMenuStatus === 'active') {
+              this.setState({accountMenuStatus: 'unactive'})
+            } else {
+              this.setState({accountMenuStatus: 'active'})
             }
           }
 
@@ -24,6 +64,15 @@ class Header2 extends Component {
               this.setState({accountMenuStatus: 'unactive'})
             } else {
               this.setState({accountMenuStatus: 'active'})
+            }
+          }
+
+          notificationHandleClick = () => {
+            if
+            (this.state.notificationMenuStatus === 'active') {
+              this.setState({notificationMenuStatus: 'unactive'})
+            } else {
+              this.setState({notificationMenuStatus: 'active'})
             }
           }
 
@@ -47,40 +96,60 @@ class Header2 extends Component {
           }
 
     render() {
+
+      const {loggedOut, redirect} = this.state;
+
+      if (loggedOut) {
+          return  <Redirect to='/'/>
+        } else if (redirect) {
+          return <Redirect to={`/browse/results/${this.state.value}`} />
+        }
+
         return (
             <header className='header2' style={{background: this.state.color}}>
-                <div className='header2top'>
-                    <div className='headerLeftSection'>
-                        <div>
-                          <img src="https://fontmeme.com/permalink/190624/077d286cb67bd13d5d3497bf52bde221.png" alt="netflix-font" border="0"/>
-                        </div>
-
-                        <div className='pageLinks'>
-                            <Link to='/browse' style={{textDecoration:'none'}}> <button>Home</button> </Link>
-                            <Link to='/browse/genre/all' style={{textDecoration:'none'}}> <button>Movies</button> </Link>
-                            <Link to='/browse/my-list' style={{textDecoration:'none'}}> <button>My List</button> </Link>
-                        </div>
+              <div className='header2top'>
+                <div className='headerLeftSection'>
+                    <div>
+                        <img src="https://fontmeme.com/permalink/190624/077d286cb67bd13d5d3497bf52bde221.png" alt="netflix-font" border="0"/>
                     </div>
 
-                    <div className='headerRightSection'>
-                        <i class="fas fa-search"/>
+                    <div className='pageLinks'>
+                        <Link to='/browse' style={{textDecoration:'none'}}> <button>Home</button> </Link>
+                        <Link to='/browse/genre/all' style={{textDecoration:'none'}}> <button>Movies</button> </Link>
+                        <Link to='/browse/my-list' style={{textDecoration:'none'}}> <button>My List</button> </Link>
+                    </div>
+                </div>
 
-                        <i id='notification' class="fas fa-bell"></i>
+                <div className='headerRightSection'>
+                    
+                    <i class="fas fa-search" className={this.state.icon + ' search-icon fas fa-search'} onClick={this.searchToggle}></i>
 
-                        <div>
+                    <div className={this.state.search + ' search-input'}>
+                      <input
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                      ></input> <button className='go' onClick={this.onSubmit} type='submit'> <i class="fas fa-search"></i> </button>
+                    </div>          
+
+                    <i id='notification' class="fas fa-bell" onClick={this.notificationHandleClick}></i>
+                        <div className={this.state.notificationMenuStatus + ' notification-drop-down-menu'}>
+                            <div className='notification-drop-down-list'> No new notifications.</div>
+                        </div>
+
+                    <div className='account-box'>
                         <img src='https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png'></img>
-                        <i id='downArrow' class="fas fa-sort-down" onClick={this.accountHandleClick}></i>
-                        <div id='drop-down-menu' className={this.state.accountMenuStatus + ' account-drop-down-menu'}>
-                              <div className='account-drop-down-list'>
-                                    <div className='column'>
-                                        <button>Account Info</button> 
-                                        <button onClick={() => this.logout()}>Log Out</button>
-                                    </div>
-                            </div>
-                        </div>
+                        <i id='downArrow' class="fas fa-sort-down" onClick={this.handleClick}></i>
+                            <div className={this.state.accountMenuStatus + ' account-drop-down-menu'}>
+                                <div className='account-drop-down-list'>
+                                      <div className='column'>
+                                          <Link to='/account' style={{textDecoration:'none'}}> <button>Account Info</button> </Link>
+                                          <button onClick={() => this.logout()}>Log Out</button>
+                                      </div>
+                              </div>
+                          </div>
                     </div>
 
-                    </div>
+                </div>
                 </div>
 
                 <div className='header2bottom'>
@@ -131,4 +200,12 @@ class Header2 extends Component {
     }
 }
 
-export default Header2;
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+
+
+export default connect(mapStateToProps, {logout})(Header2);

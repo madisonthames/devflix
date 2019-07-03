@@ -49,6 +49,15 @@ main {
     justify-content: flex-start;
     width: 37vw;
 
+    span {
+        color: white;
+        font-size: 1.5vw;
+        line-height: 4vh;
+        font-weight: bold;
+        margin: 0;
+        margin-left: .7vw;
+    }
+
     button {
         display: flex;
         justify-content: center;
@@ -59,17 +68,10 @@ main {
         background: rgba(29, 29, 28, 0.7); 
         border-radius: 3px;
         border: none;
+        outline: none;
         // z-index: -1;
     }
 
-    p {
-        display: flex;
-        justify-content: center;
-        color: white;
-        font-size: 1.2vw;
-        font-weight: bold;
-        margin-left: .8vw;
-    }
 }
 
 

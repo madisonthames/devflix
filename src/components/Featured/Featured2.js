@@ -11,18 +11,68 @@ class Featured2 extends Component {
             movie: [],
             loggedIn: true,
             user: [],
+            list: [],
+            isInList: false
         }
     }
+
     addToList(movie) {
         axios
         .post("/api/mylist", movie)
         .then(response => {
-            alert('Saved to your list!');
+            this.state.list.push(response.data[0])
+            this.setState({ isInList: this.checkList(movie.id).length > 0 })
         })
+    }
+
+    deleteFromList = id => {
+        axios
+          .delete(`/api/delete/${id}`)
+          .then(response => {
+              console.log(response)
+            this.setState({list: response.data})
+            this.setState({ isInList: this.checkList(id).length > 0})
+           })
+      };
+
+    getList = () => {
+        axios
+        .get("/api/mylist")
+        .then(response => {
+          this.setState({ list: response.data });
+        }).catch(error => {
+            this.setState({ error: "Oops, please try again."})
+        }
+            )
+    };
+
+
+    toggleHidden(id, genre) {
+        axios
+        .get(`/api/browse/movie/${id}`)
+        .then(response => {
+            this.setState({ movie: response.data, isHidden: !this.state.isHidden, hiddenGenre: genre });
+        })
+        .catch(error => {
+            this.setState({ error: "Oops, comedy please try again."})
+        });
+
+        axios
+        .get(`/api/browse/movie/cast/${id}`)
+        .then(response => {
+            this.setState({ cast: response.data.cast[0].name, cast2: response.data.cast[1].name, cast3: response.data.cast[2].name })
+        })
+        console.log(this.state.list);
+        this.setState({ isInList: this.checkList(id).length > 0})
+    }
+
+    checkList(id) {
+        return this.state.list.filter((item) => id == item.movie_id)
     }
 
     componentDidMount() {
         this.props.getUser() 
+        this.getList()
 
         axios
         .get('/api/guardians')
@@ -35,6 +85,8 @@ class Featured2 extends Component {
         });
     }
     render() {
+        const {isInList} = this.state;
+
         return (
             <main>
                 <div className='movie-poster2'>
@@ -46,8 +98,10 @@ class Featured2 extends Component {
                     <h2>of the Galaxy</h2>
 
                     <div className='buttonsRow2'>
-                        <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button className='button'> <i id='icons' class="fas fa-play"></i> <p id='buttonText'>Play</p></button> </Link>
-                        <button className='button' onClick={() => this.addToList(this.state.movie)}> <i id='icons' class="fas fa-plus"></i> <p id='buttonText'>My List</p></button>
+                        <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button className='button'> <i id='icons' class="fas fa-play"></i> <span>Play</span></button> </Link>
+                        <button className='button' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                            <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                        <span>My List</span> </button>
                     </div>
 
                     <div>

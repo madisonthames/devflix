@@ -19,6 +19,8 @@ class BrowseLists2 extends Component {
             thriller: [],
             popular2: [],
             tv: [],
+            list: [],
+            isInList: false,
             loggedIn: true,
             user: [],
             isHidden: true,
@@ -32,9 +34,32 @@ class BrowseLists2 extends Component {
         axios
         .post("/api/mylist", movie)
         .then(response => {
-            alert('Saved to your list!');
+            this.state.list.push(response.data[0])
+            this.setState({ isInList: this.checkList(movie.id).length > 0 })
         })
     }
+
+    deleteFromList = id => {
+        axios
+          .delete(`/api/delete/${id}`)
+          .then(response => {
+              console.log(response)
+            this.setState({list: response.data})
+            this.setState({ isInList: this.checkList(id).length > 0})
+           })
+      };
+
+    getList = () => {
+        axios
+        .get("/api/mylist")
+        .then(response => {
+          this.setState({ list: response.data });
+        }).catch(error => {
+            this.setState({ error: "Oops, please try again."})
+        }
+            )
+    };
+
 
     toggleHidden(id, genre) {
         axios
@@ -49,9 +74,10 @@ class BrowseLists2 extends Component {
         axios
         .get(`/api/browse/movie/cast/${id}`)
         .then(response => {
-            console.log(response.data.cast[0])
             this.setState({ cast: response.data.cast[0].name, cast2: response.data.cast[1].name, cast3: response.data.cast[2].name })
         })
+        console.log(this.state.list);
+        this.setState({ isInList: this.checkList(id).length > 0})
     }
 
     changeDate(str) {
@@ -60,8 +86,13 @@ class BrowseLists2 extends Component {
         return newStr.join('')
     }
 
+    checkList(id) {
+        return this.state.list.filter((item) => id == item.movie_id)
+    }
+
     componentDidMount() {
         this.props.getUser()
+        this.getList();
 
         axios
         .get("/api/comedy2")
@@ -161,7 +192,7 @@ class BrowseLists2 extends Component {
 
 
     render() {
-        const {comedy2, action, documentary, romance, mystery, family, music, thriller, popular2, tv, loggedIn, user} = this.state;
+        const {comedy2, action, documentary, romance, mystery, family, music, thriller, popular2, tv, loggedIn, isInList} = this.state;
 
         if(!loggedIn) {
             return <Redirect to='/auth/login'/>
@@ -205,18 +236,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -259,18 +297,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -313,18 +358,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -366,18 +418,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -387,12 +446,11 @@ class BrowseLists2 extends Component {
                 <section>
                     <h1>Most Popular</h1>
 
-                    <div className='listRow'>
+                    <div className='popular2ListRow'>
                             {popular2.map((popular2Movie, index) => (
                                     <div className='movie'>
                                             <div className='movie--image' onClick={() => this.toggleHidden(popular2Movie.id, 'popular2')}>
-                                                <img src={(`https://image.tmdb.org/t/p/w500/${popular2Movie.backdrop_path}`)} ></img>
-                                                <p>{popular2Movie.title}</p>  
+                                                <img src={(`https://image.tmdb.org/t/p/w500/${popular2Movie.poster_path}`)} ></img>
                                             </div>
                                     </div>
 
@@ -416,18 +474,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -470,18 +535,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -524,18 +596,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -579,18 +658,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -633,18 +719,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  
@@ -687,18 +780,25 @@ class BrowseLists2 extends Component {
                                         </div>
 
                                         <div className='buttons'>
-                                            <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
-                                            <button id='list' onClick={() => this.addToList(this.state.movie)}> <i class="fas fa-plus"></i> <h4>My List</h4> </button>
+                                                <Link to={`/browse/play/${this.state.movie.id}`} style={{textDecoration:'none'}}> <button id='play'> <i class="fas fa-play"></i> <h4>Play</h4>  </button> </Link>
+                                                <button id='list' onClick={() => isInList ? this.deleteFromList(this.state.movie.id) : this.addToList(this.state.movie)}> 
+                                                <i className={`fas ${isInList ? 'fa-minus' : 'fa-plus'}`}></i> 
+                                                <h4>My List</h4> </button>
                                         </div>
 
                                         <div className='cast'>
-                                            <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
-                                            <em> <b>Genres:</b> {this.state.movie.genres[0].name}, {this.state.movie.genres[1].name}</em>
+                                                <em> <b>Starring:</b> {this.state.cast}, {'  '} {this.state.cast2}, {'  '} {this.state.cast3} </em>
+                                                <b>Genres: {this.state.movie.genres.map((genre, index) => (
+                                                        <em>{`${genre.name + ' '}`}</em>  
+                                            ))}</b>
                                         </div>
 
                                     </div>
 
-                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}/>
+
+                                    <div className='drop-image' style={{backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${this.state.movie.backdrop_path})`}}>
+                                        <i class="fas fa-times" onClick={() => this.toggleHidden(this.state.movie.id)}></i>
+                                    </div>
 
                                 </div>
                             }  

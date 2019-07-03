@@ -66,7 +66,8 @@ body {
 
 .popular2ListRow {
     display: flex;
-    margin: 2vh 0;
+    margin-left: 50px;
+    margin-top: 15px;
     overflow: auto;
     white-space: nowrap;
     height: 400px;
@@ -143,6 +144,7 @@ body {
         height: 8vh;
         background: #DB1928;
         border: none;
+        outline: none;
     }
 
     #list {
@@ -154,6 +156,7 @@ body {
         background: none;
         border: solid white 2px;
         margin-left: 10px;
+        outline: none;
     }
 
     h4 {
@@ -188,6 +191,10 @@ body {
         font-weight: bold;
         color: #999999;
     }
+
+    span {
+        color: white;
+    }
 }
 
 .bottom {
@@ -209,4 +216,14 @@ body {
     background-size: cover;
     right: 0;
     position: sticky;
+
+        i {
+            position: absolute;
+            z-index: 5;
+            color: white;
+            font-size: 30px;
+            right: 10px;
+            margin-top: 6px;
+            -webkit-text-stroke: 1px black;
+        }
 }

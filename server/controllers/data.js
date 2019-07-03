@@ -205,6 +205,27 @@ const getResults = (req, res) => {
     })
 }
 
+const getBest = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&primary_release_year=2016&sort_by=popularity.desc`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
+const getBradPitt = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_cast=287&sort_by=popularity.desc`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
+const getFamilyThrowbacks = (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&certification.lte=G&release_date.gte=1988&release_date.lte=2000&sort_by=popularity.desc`)
+    .then(response => {
+        res.status(200).json(response.data)
+    })
+}
+
 //exports
 module.exports = {
     getPopular,
@@ -233,6 +254,9 @@ module.exports = {
     getStars,
     getLala,
     getGuardians,
-    getResults
+    getResults,
+    getBest,
+    getBradPitt,
+    getFamilyThrowbacks
 }
 

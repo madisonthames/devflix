@@ -46,3 +46,58 @@
             -webkit-text-stroke: black .7px;
         }
 }
+
+.movie-details-list {
+    position: absolute;
+    top: 180px;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 1015px;
+    height: 500px;
+    background: black;
+    font-family: $font;
+    overflow: visible;
+}
+
+.details-info-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30vw;
+    margin: 50px;
+
+    h2 {
+        color: white;
+        font-size: 40px;
+        overflow: visible;
+    }
+}
+
+.overview-list {
+    width: 50vh;
+
+    strong {
+        font-size: 15px;
+        width: 100%;
+        margin-left: 0;
+        color: #999999;
+    }
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+
+    sub {
+        font-size: 12px;
+        width: 50px;
+        margin-left: 0;
+        color: #999999;
+    }
+
+    .time {
+        display: flex;
+        margin-top: 7px;
+    }
+}

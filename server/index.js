@@ -60,6 +60,9 @@ app.get('/api/browse/movie/cast/:id', dataController.getStars)
 app.get('/api/lala', dataController.getLala)
 app.get('/api/guardians', dataController.getGuardians)
 app.get('/api/browse/results/', dataController.getResults)
+app.get('/api/browse/best', dataController.getBest)
+app.get('/api/browse/bradpitt', dataController.getBradPitt)
+app.get('/api/browse/familythrowbacks', dataController.getFamilyThrowbacks)
 
 //get external API
 app.get('/auth/user', authCtrl.getUser);

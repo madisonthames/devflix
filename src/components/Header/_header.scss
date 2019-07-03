@@ -8,6 +8,14 @@
     padding: 20px 50px 20px 50px;
     font-family: $font;
     z-index: 2;
+
+    .search-icon {
+        display: flex;
+    
+        &.unactive {
+            display: none;
+        }
+      }
 }
 
 .headerLeftSection {
@@ -44,6 +52,22 @@
     align-items: center;
     align-content: center;
     width: 50%;
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+    border: 1.5px solid #0D7E80;
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+
+
+}
 
     img {
         width: 30px;
@@ -60,15 +84,38 @@
     input {
         background: black;
         color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px white solid;
+        height: 32px;
+        width: 200px;
+        text-align: center;
+        outline: none;
     }
 
     .go {
-        background: black;
+        position: absolute;
+        background: none;
+        border: none;
+        transform: translateY(7px)
+        translateX(165px);
+        outline: none;
+
+        i {
+            font-size: 18px;
+            transform: translateY(-1px);
+        }
     }
 }
 
+.account-box {
+    display: flex;
+    align-content: center;
+}
+
 #downArrow {
-    transform: translateY(-10px);
+    transform: translateY(4px);
 }
 
 .account-drop-down-menu {
@@ -154,5 +201,9 @@
     }
   }
 
-
+// ::-webkit-input-placeholder {
+//     transform: translateY(0px)
+//     translateX(5px);
+//     font-weight: bold;
+// }
 

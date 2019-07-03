@@ -5,7 +5,6 @@
 @import './components/BrowseLists/browselists';
 @import './components/Home/home';
 @import './components//Register/register';
-@import './components/Payment/payment';
 @import './components/Featured/featured2';
 @import './components/Video/video';
 @import './components/Login/login';
@@ -17,4 +16,28 @@
 
 h1 {
     color: white;
+}
+
+.tooltip {
+    position: relative;
+
+    &::before {
+        content: 'Added';
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: -50%;
+        padding: 20px;
+        border-radius: 3px;
+        opacity: 0;
+        transition: .2s ease opacity, .2s ease transform;
+        transform: translateY(-20px);
+    }
+
+    &.active {
+        &::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }

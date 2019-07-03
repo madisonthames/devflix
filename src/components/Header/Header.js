@@ -15,7 +15,7 @@ class Header extends Component {
             value: '',
             redirect: false,
             search: 'search-input', 
-            icon: 'search'
+            icon: 'search-icon'
           }
 
           this.handleChange = this.handleChange.bind(this);
@@ -26,9 +26,9 @@ class Header extends Component {
           searchToggle() {
             if
             (this.state.search === 'active') {
-              this.setState({search: 'unactive'})
+              this.setState({search: 'unactive', icon: 'active'})
             } else {
-              this.setState({search: 'active'})
+              this.setState({search: 'active', icon: 'unactive'})
             }
           }
 
@@ -103,11 +103,10 @@ class Header extends Component {
 
                 <div className='headerRightSection'>
                     
-                    <i class="fas fa-search" id='search' onClick={this.searchToggle}></i>
+                    <i class="fas fa-search" className={this.state.icon + ' search-icon fas fa-search'} onClick={this.searchToggle}></i>
 
                     <div className={this.state.search + ' search-input'}>
-                      <input placeholder='Search'
-                      type='text'
+                      <input
                       value={this.state.value}
                       onChange={this.handleChange}
                       ></input> <button className='go' onClick={this.onSubmit} type='submit'> <i class="fas fa-search"></i> </button>
@@ -118,7 +117,7 @@ class Header extends Component {
                             <div className='notification-drop-down-list'> No new notifications.</div>
                         </div>
 
-                    <div>
+                    <div className='account-box'>
                         <img src='https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png'></img>
                         <i id='downArrow' class="fas fa-sort-down" onClick={this.handleClick}></i>
                             <div className={this.state.accountMenuStatus + ' account-drop-down-menu'}>

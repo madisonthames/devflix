@@ -1,6 +1,7 @@
-.search {
+.full-search {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     position: relative;
     top: 15vh;
     margin-left: 50px;
@@ -45,4 +46,17 @@
             transform: translateY(-165px);
             -webkit-text-stroke: black .7px;
         }
+}
+
+.movie-details-results {
+    position: absolute;
+    top: 180px;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 1032px;
+    height: 500px;
+    background: black;
+    font-family: $font;
+    overflow: visible;
 }
